@@ -1,10 +1,9 @@
    
   // Get API key from environment variables or display error
     async function getApiKey() {
-      // Try to get from environment variable first
-      if (typeof process !== 'undefined' && process.env && process.env.OPENAI_API_KEY) {
-        return process.env.OPENAI_API_KEY;
-      }
+  throw new Error("API key no se usa en frontend. La llamada se maneja desde Flask.");
+}
+
       
       // Try to get from a config endpoint (you'll need to create this)
       try {
@@ -19,7 +18,7 @@
       
       // Temporary fallback for local testing
       return TEMP_API_KEY;
-    }
+   
 
     const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
@@ -165,61 +164,35 @@ Respondé siempre como Mariano, en primera persona, con conocimiento detallado d
     let filteredApps = [...apps];
     let chatHistory = [];
 
-    // === OPENAI API CALL ===
-    async function callOpenAI(userMessage) {
-      try {
-        const apiKey = await getApiKey();
-        
-        if (!apiKey) {
-          throw new Error('API key not configured');
-        }
+    // === OPENAI API CALL (vía Flask backend) ===
+async function callOpenAI(userMessage) {
+  try {
+    const messages = [
+      { role: "system", content: marianoContext },
+      ...chatHistory,
+      { role: "user", content: userMessage }
+    ];
 
-        const messages = [
-          { role: "system", content: marianoContext },
-          ...chatHistory,
-          { role: "user", content: userMessage }
-        ];
+    const response = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: JSON.stringify(messages)
+      })
+    });
 
-        const response = await fetch(OPENAI_API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: messages,
-            max_tokens: 500,
-            temperature: 0.7
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const aiResponse = data.choices[0].message.content;
-        
-        // Update chat history
-        chatHistory.push({ role: "user", content: userMessage });
-        chatHistory.push({ role: "assistant", content: aiResponse });
-        
-        // Keep only last 10 messages to avoid token limits
-        if (chatHistory.length > 10) {
-          chatHistory = chatHistory.slice(-10);
-        }
-        
-        return aiResponse;
-
-      } catch (error) {
-        console.error('Error calling OpenAI:', error);
-        if (error.message.includes('API key')) {
-          return `🔑 El chat requiere configuración del servidor. Mientras tanto, podés escribirme a marianobiotico@gmail.com o WhatsApp para cualquier consulta sobre mis proyectos.`;
-        }
-        return `¡Uy! Tuve un problema técnico. Pero tranqui, podés preguntarme sobre mis apps, proyectos o escribirme directamente a marianobiotico@gmail.com 😊`;
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const data = await response.json();
+    return data.response;
+  } catch (error) {
+    console.error("Error llamando a OpenAI desde el servidor:", error);
+    throw error;
+  }
+}
+
 
     // === PROGRESS BAR ===
     function updateProgressBar() {
