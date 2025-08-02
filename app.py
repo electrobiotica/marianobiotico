@@ -18,16 +18,21 @@ def index():
 @app.route("/api/ask", methods=["POST"])
 def ask():
     data = request.json
-    prompt = data.get("prompt")
+    messages_raw = data.get("prompt")
 
     try:
+        messages = eval(messages_raw) if isinstance(messages_raw, str) else messages_raw
         response = openai.ChatCompletion.create(
             model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
+            messages=messages
         )
         return jsonify({"response": response.choices[0].message.content})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+if not messages or not isinstance(messages, list):
+    return jsonify({"error": "Mensajes inválidos"}), 400
+
 if __name__ == "__main__":
     app.run(debug=True)
+
