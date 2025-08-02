@@ -20,6 +20,9 @@ def ask():
     data = request.json
     messages_raw = data.get("prompt")
 
+    if not messages_raw:
+        return jsonify({"error": "Mensajes inválidos"}), 400  # ← ESTO DEBE ESTAR DENTRO
+
     try:
         messages = eval(messages_raw) if isinstance(messages_raw, str) else messages_raw
         response = openai.ChatCompletion.create(
@@ -30,9 +33,7 @@ def ask():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if not messages or not isinstance(messages, list):
-    return jsonify({"error": "Mensajes inválidos"}), 400
-
 if __name__ == "__main__":
     app.run(debug=True)
+
 
