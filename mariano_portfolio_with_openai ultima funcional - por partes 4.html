@@ -1,0 +1,5069 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>marianobiotico.systems - Building intelligent tools for human insight</title>
+  <meta name="description" content="Desarrollador Full Stack especializado en IA aplicada. Apps inteligentes, privacidad first, diseño que no agota.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --accent: #22ff66;
+      --accent-dark: #0f8c40;
+      --accent-pink: #ff6b9d;
+      --accent-blue: #4ecdc4;
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: rgba(34, 255, 102, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-pink));
+      z-index: 1000;
+      transition: width 0.1s ease;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      border-color: var(--accent);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(34, 255, 102, 0.1) 0%, transparent 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(0.5deg); }
+    }
+
+    .hero-content {
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--accent-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s ease-in-out infinite alternate;
+      word-break: keep-all;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 20px rgba(34, 255, 102, 0.3)); }
+      to { filter: drop-shadow(0 0 40px rgba(34, 255, 102, 0.6)); }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, var(--accent), var(--accent-dark));
+      color: #000;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px var(--shadow);
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .cta-button.secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--border);
+    }
+
+    .cta-button.secondary:hover {
+      border-color: var(--accent);
+      background: var(--glass);
+    }
+
+    /* NAVIGATION */
+    .nav {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 0.5rem;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+    }
+
+    .nav-item a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-item a:hover, .nav-item a.active {
+      background: var(--accent);
+      color: #000;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 4rem auto;
+      z-index: 10;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-pink));
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin: 3rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: 0;
+      margin-right: 50%;
+      text-align: right;
+      padding-right: 2rem;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-left: 50%;
+      margin-right: 0;
+      text-align: left;
+      padding-left: 2rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 1rem;
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      border: 3px solid var(--bg-primary);
+    }
+
+    .timeline-content {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .timeline-year {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-description {
+      color: var(--text-secondary);
+    }
+
+    /* SEARCH & FILTERS */
+    .search-filters {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 400px;
+      margin: 0 auto 2rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(34, 255, 102, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      padding: 0.5rem 1rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .filter-tag.active, .filter-tag:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    /* APPS SHOWCASE */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .app-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .app-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(34, 255, 102, 0.2);
+    }
+
+    .app-card.hidden {
+      display: none;
+    }
+
+    .app-image {
+      height: 200px;
+      background: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .app-card:hover .app-image img {
+      transform: scale(1.05);
+    }
+
+    .app-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--accent);
+      background: var(--bg-secondary);
+    }
+
+    .app-content {
+      padding: 2rem;
+    }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .app-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .app-category {
+      background: var(--accent);
+      color: #000;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .app-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .app-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .app-tag {
+      background: var(--glass);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+    }
+
+    .app-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .app-link:hover {
+      gap: 1rem;
+    }
+
+    .app-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .status-dot.offline {
+      background: #ff4757;
+    }
+
+    /* METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+      padding: 2rem;
+      background: var(--glass);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      margin: 4rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.3;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .testimonial-author {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ROLES SECTION */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .role-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .role-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .role-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .role-description {
+      color: var(--text-secondary);
+    }
+
+    /* MICRO-INTERACCIONES PREMIUM */
+    
+    /* Ripple Effect */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .ripple:active::before {
+      width: 300px;
+      height: 300px;
+    }
+
+ /* 🎪 MICRO-INTERACCIONES PREMIUM - TOAST NOTIFICATIONS */
+
+/* Container principal de toasts */
+.toast-container {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+/* Toast base */
+.toast {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  color: var(--text-primary);
+  min-width: 300px;
+  max-width: 400px;
+  transform: translateX(400px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Toast visible */
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Tipos de toast */
+.toast.success {
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(34, 255, 102, 0.2);
+}
+
+.toast.success::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+}
+
+.toast.error {
+  border-color: #ff4757;
+  box-shadow: 0 8px 32px rgba(255, 71, 87, 0.2);
+}
+
+.toast.error::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #ff4757;
+}
+
+.toast.info {
+  border-color: var(--accent-blue);
+  box-shadow: 0 8px 32px rgba(78, 205, 196, 0.2);
+}
+
+.toast.info::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-blue);
+}
+
+.toast.warning {
+  border-color: #ffa502;
+  box-shadow: 0 8px 32px rgba(255, 165, 2, 0.2);
+}
+
+.toast.warning::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #ffa502;
+}
+
+/* Icono del toast */
+.toast-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Contenido del toast */
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.toast-message {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Botón de cerrar */
+.toast-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+/* Barra de progreso */
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0 0 12px 12px;
+  transform-origin: left;
+  animation: toastProgress 4s linear forwards;
+}
+
+.toast.success .toast-progress {
+  background: var(--accent);
+}
+
+.toast.error .toast-progress {
+  background: #ff4757;
+}
+
+.toast.info .toast-progress {
+  background: var(--accent-blue);
+}
+
+.toast.warning .toast-progress {
+  background: #ffa502;
+}
+
+@keyframes toastProgress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toast-container {
+    right: 1rem;
+    left: 1rem;
+    top: 1rem;
+  }
+  
+  .toast {
+    min-width: auto;
+    max-width: none;
+  }
+}
+    /* Typing Animation */
+    .typing-text {
+      border-right: 2px solid var(--accent);
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { border-color: var(--accent); }
+      51%, 100% { border-color: transparent; }
+    }
+
+    /* 🎪 MICRO-INTERACCIONES PREMIUM - ADVANCED BUTTON STATES */
+
+/* Base para botones premium */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  user-select: none;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+
+/* ESTADOS HOVER ESPECÍFICOS POR TIPO - SIN CONFLICTOS */
+.cta-button.btn-premium:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+.contact-link.btn-premium:hover {
+  transform: translateY(-1px) scale(1.005);
+  box-shadow: 0 4px 15px rgba(34, 255, 102, 0.1);
+}
+
+.suggestion-bubble.btn-premium:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btn-premium:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+.btn-premium:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 255, 102, 0.3);
+}
+
+/* Estado loading */
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.8;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Estado success con checkmark */
+.btn-success {
+  background: var(--accent) !important;
+  color: #000 !important;
+  position: relative;
+}
+
+.btn-success::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
+  animation: checkmark 0.5s ease;
+}
+
+@keyframes checkmark {
+  0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
+  100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+}
+
+/* Estado error */
+.btn-error {
+  background: #ff4757 !important;
+  color: white !important;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* 🎪 EFECTO MAGNÉTICO MEJORADO - MÁS SUTIL */
+
+/* Reducir la intensidad del efecto magnético */
+.btn-magnetic {
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Hacer el efecto más sutil y rápido */
+.btn-premium:hover {
+  transform: translateY(-1px) scale(1.01); /* Reducido de -2px y 1.02 */
+  box-shadow: 0 6px 20px rgba(34, 255, 102, 0.25); /* Menos intenso */
+  transition: all 0.2s ease; /* Más rápido */
+}
+
+.btn-premium:active {
+  transform: translateY(0) scale(0.99);
+  transition: all 0.1s ease;
+}
+
+/* Específicamente para contact links - efecto más sutil */
+.contact-link.btn-premium:hover {
+  transform: translateY(-1px) scale(1.005); /* Mucho más sutil */
+  box-shadow: 0 4px 15px rgba(34, 255, 102, 0.1);
+}
+
+/* CTA buttons un poco más expresivos pero controlados */
+.cta-button.btn-premium:hover {
+  transform: translateY(-2px) scale(1.015); /* Ligeramente reducido */
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+/* Suggestion bubbles muy sutiles */
+.suggestion-bubble.btn-premium:hover {
+  transform: translateY(-1px) scale(1.01); /* Muy sutil */
+}
+
+/* Desactivar completamente el magnético en elementos problemáticos */
+.contact-link .btn-magnetic,
+.suggestion-bubble .btn-magnetic {
+  transform: none !important;
+}
+
+/* Mejorar la fluidez general */
+.btn-premium {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Botones con gradiente animado */
+.btn-gradient-animated {
+  background: linear-gradient(45deg, var(--accent), var(--accent-pink), var(--accent-blue), var(--accent));
+  background-size: 300% 300%;
+  animation: gradientShift 4s ease infinite;
+}
+
+.btn-gradient-animated:hover {
+  animation-duration: 1s;
+}
+
+/* Botón con efecto de partículas */
+.btn-particles {
+  position: relative;
+  overflow: visible;
+}
+
+.btn-particles::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--accent) 2px, transparent 2px);
+  background-size: 15px 15px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.btn-particles:hover::after {
+  opacity: 0.3;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Botón con glow pulsante */
+.btn-pulse-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 5px rgba(34, 255, 102, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(34, 255, 102, 0.8), 0 0 30px rgba(34, 255, 102, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(34, 255, 102, 0.4); }
+}
+
+/* Botón con efecto de ondas */
+.btn-waves {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-waves::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.btn-waves:hover::before {
+  left: 100%;
+}
+
+/* Estados para diferentes tipos de botones */
+.cta-button.btn-premium:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.contact-link.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(34, 255, 102, 0.15);
+}
+
+.suggestion-bubble.btn-premium:hover {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* Botón con contador de clicks */
+.btn-click-counter::after {
+  content: attr(data-clicks);
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent-pink);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.btn-click-counter[data-clicks]:not([data-clicks="0"])::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn-premium:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(34, 255, 102, 0.2);
+  }
+  
+  .btn-premium:active {
+    transform: scale(0.95);
+  }
+  
+  .btn-magnetic {
+    /* Desactivar efectos magnéticos en móvil */
+    transform: none !important;
+  }
+}
+    /* Loading Dots Animation */
+    .loading-dots {
+      display: inline-flex;
+      gap: 0.2rem;
+    }
+
+    .loading-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: loadingDots 1.4s infinite ease-in-out;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+    .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+    @keyframes loadingDots {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+/* 🎪 MICRO-INTERACCIONES PREMIUM - TYPING ANIMATION */
+
+/* Cursor parpadeante */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  vertical-align: baseline;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Contenedor para texto que se está "escribiendo" */
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Efectos especiales para diferentes velocidades */
+.typing-slow {
+  animation-duration: 4s;
+}
+
+.typing-medium {
+  animation-duration: 2.5s;
+}
+
+.typing-fast {
+  animation-duration: 1.5s;
+}
+
+/* Typing effect que se expande desde 0 */
+.typing-expand {
+  width: 0;
+  animation: typing-expand 3s steps(40, end) forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes typing-expand {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Efecto de máquina de escribir más avanzado */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--accent);
+  white-space: nowrap;
+  animation: 
+    typing 3s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  width: 0;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--accent); }
+}
+
+/* Para hero title con efecto typing especial */
+.hero-typing {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeInTyping 0.5s ease forwards;
+}
+
+.hero-typing.active {
+  opacity: 1;
+}
+
+@keyframes fadeInTyping {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+/* Efecto de escritura letra por letra */
+.letter-by-letter {
+  display: inline-block;
+}
+
+.letter-by-letter .letter {
+  opacity: 0;
+  display: inline-block;
+  animation: letterAppear 0.1s ease forwards;
+}
+
+@keyframes letterAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typing con efecto de glitch */
+.typing-glitch {
+  position: relative;
+  overflow: hidden;
+}
+
+.typing-glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: var(--accent-pink);
+  animation: glitch1 2s infinite;
+  clip: rect(0, 0, 0, 0);
+}
+
+.typing-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: var(--accent-blue);
+  animation: glitch2 2s infinite;
+  clip: rect(0, 0, 0, 0);
+}
+
+@keyframes glitch1 {
+  0% { clip: rect(0, 0, 0, 0); }
+  5% { clip: rect(0, 900px, 15px, 0); }
+  10% { clip: rect(0, 0, 0, 0); }
+  15% { clip: rect(0, 900px, 30px, 0); }
+  20% { clip: rect(0, 0, 0, 0); }
+  100% { clip: rect(0, 0, 0, 0); }
+}
+
+@keyframes glitch2 {
+  0% { clip: rect(0, 0, 0, 0); }
+  10% { clip: rect(0, 900px, 10px, 0); }
+  15% { clip: rect(0, 0, 0, 0); }
+  20% { clip: rect(0, 900px, 20px, 0); }
+  25% { clip: rect(0, 0, 0, 0); }
+  100% { clip: rect(0, 0, 0, 0); }
+}
+    /* Pulse Effect */
+    .pulse-effect {
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px rgba(34, 255, 102, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(34, 255, 102, 0.6); }
+      100% { box-shadow: 0 0 5px rgba(34, 255, 102, 0.2); }
+    }
+
+    /* Shake Animation */
+    .shake {
+      animation: shake 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Bounce Animation */
+    .bounce-in {
+      animation: bounceIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Success Checkmark Animation */
+    .checkmark {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: var(--accent);
+      stroke-miterlimit: 10;
+      box-shadow: inset 0px 0px 0px var(--accent);
+      animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+    }
+
+    .checkmark-circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: var(--accent);
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .checkmark-check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+
+    @keyframes stroke {
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scale {
+      0%, 100% { transform: none; }
+      50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+
+    @keyframes fill {
+      100% { box-shadow: inset 0px 0px 0px 30px var(--accent); }
+    }
+
+    /* Heart Animation */
+    .heart-animation {
+      animation: heartBeat 1.2s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.1); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      70% { transform: scale(1); }
+    }
+
+    /* Floating Labels */
+    .floating-label {
+      position: relative;
+    }
+
+    .floating-label input:focus + label,
+    .floating-label input:valid + label {
+      transform: translateY(-25px) scale(0.8);
+      color: var(--accent);
+    }
+
+    .floating-label label {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      background: var(--bg-primary);
+      padding: 0 0.25rem;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .toast {
+        min-width: calc(100vw - 4rem);
+      }
+      
+      .toast-container {
+        right: 1rem;
+        left: 1rem;
+        top: 1rem;
+      }
+    }
+
+    .chat-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chat-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .chat-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 1rem;
+      background: var(--glass);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 80%;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.bot {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .message.user {
+      background: var(--accent);
+      color: #000;
+      margin-left: auto;
+    }
+
+    .message.loading {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(34, 255, 102, 0.2);
+    }
+
+    .chat-send {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chat-send:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .chat-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* CONTACT SECTION */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(34, 255, 102, 0.1);
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      margin-top: 6rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 2rem auto;
+        max-width: 90%;
+      }
+
+      .nav-list {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 0 1rem;
+      }
+
+      .section {
+        padding: 4rem 1rem;
+      }
+
+      .apps-grid,
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-section {
+        margin: 2rem 1rem;
+        padding: 2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 0 1rem;
+      }
+
+      .timeline::before {
+        left: 2rem;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 4rem;
+        margin-right: 0;
+        text-align: left;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+
+      .timeline-dot {
+        left: 2rem;
+      }
+    }
+
+    /* PREMIUM VISUAL EXPERIENCE */
+    
+    /* Custom Cursor */
+    * {
+      cursor: none;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: all 0.1s ease;
+      opacity: 0;
+    }
+
+    .custom-cursor.active {
+      opacity: 1;
+    }
+
+    .custom-cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.15s ease;
+      opacity: 0;
+    }
+
+    .custom-cursor-follower.active {
+      opacity: 0.5;
+    }
+
+    /* Cursor hover states */
+    .cursor-hover .custom-cursor {
+      transform: scale(1.5);
+      background: var(--accent-pink);
+    }
+
+    .cursor-hover .custom-cursor-follower {
+      transform: scale(2);
+      border-color: var(--accent-pink);
+    }
+
+    /* Dynamic Glassmorphism */
+    .glass-dynamic {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .glass-dynamic:hover {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-color: rgba(34, 255, 102, 0.3);
+      box-shadow: 0 8px 32px rgba(34, 255, 102, 0.15);
+    }
+
+    /* Dynamic Gradient Backgrounds */
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+      background: linear-gradient(45deg, 
+        var(--accent) 0%, 
+        var(--accent-pink) 25%, 
+        var(--accent-blue) 50%, 
+        var(--accent) 75%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Skeleton Loaders */
+    .skeleton {
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-text {
+      height: 1rem;
+      border-radius: 4px;
+      margin: 0.5rem 0;
+    }
+
+    .skeleton-title {
+      height: 2rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      width: 70%;
+    }
+
+    .skeleton-image {
+      height: 200px;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+
+    /* Smooth Page Transitions */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+      z-index: 10000;
+      transform: translateX(-100%);
+      transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    .page-transition.active {
+      transform: translateX(0);
+    }
+
+    .page-transition.exit {
+      transform: translateX(100%);
+    }
+
+    /* Enhanced Sections with Dynamic Blur */
+    .section-enhanced {
+      position: relative;
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter 0.3s ease;
+    }
+
+    .section-enhanced.in-view {
+      backdrop-filter: blur(2px);
+    }
+
+    /* Floating Elements with Scroll Parallax */
+    .float-bg-element {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--accent), var(--accent-pink));
+      opacity: 0.1;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .float-bg-element:nth-child(1) {
+      width: 200px;
+      height: 200px;
+      top: 10%;
+      left: 10%;
+      animation: floatSlow 8s ease-in-out infinite;
+    }
+
+    .float-bg-element:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 15%;
+      animation: floatSlow 12s ease-in-out infinite reverse;
+    }
+
+    .float-bg-element:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+      left: 20%;
+      animation: floatSlow 10s ease-in-out infinite;
+    }
+
+    /* Enhanced Image Loading */
+    .image-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-lazy {
+      opacity: 0;
+      transform: scale(1.1);
+      transition: all 0.6s ease;
+      filter: blur(5px);
+    }
+
+    .image-lazy.loaded {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+
+    .image-lazy.error {
+      opacity: 0.5;
+      filter: grayscale(100%);
+    }
+
+    /* Premium Scroll Indicators */
+    .scroll-indicator {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+    }
+
+    .scroll-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .scroll-dot.active {
+      background: var(--accent);
+      transform: scale(1.5);
+    }
+
+    .scroll-dot:hover {
+      background: var(--accent-pink);
+      transform: scale(1.2);
+    }
+
+    .scroll-dot::after {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .scroll-dot.active::after {
+      width: 10px;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .custom-cursor,
+      .custom-cursor-follower {
+        display: none;
+      }
+
+      * {
+        cursor: auto;
+      }
+
+      .scroll-indicator {
+        display: none;
+      }
+
+      .float-bg-element {
+        display: none;
+      }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      .gradient-bg,
+      .skeleton,
+      .float-bg-element,
+      .floating-particles {
+        animation: none;
+      }
+      
+      .page-transition {
+        transition-duration: 0.1s;
+      }
+    }
+
+    /* ADVANCED ANIMATIONS */
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120%;
+      height: 120%;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+
+    .float-element {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+
+    .float-element:nth-child(even) {
+      animation: floatSlow 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .slide-in-left.visible,
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stagger-animation {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .stagger-animation.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Enhanced hover effects */
+    .app-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(34, 255, 102, 0.1), transparent);
+      transition: left 0.5s ease;
+      z-index: 1;
+    }
+
+    .app-card:hover::before {
+      left: 100%;
+    }
+
+    .role-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .role-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(34, 255, 102, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: all 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .role-card:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+
+    /* Magnetic effect for CTA buttons */
+    .cta-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.4s ease;
+    }
+
+    .cta-button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Floating particles animation */
+    .floating-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: particleFloat 15s linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+      }
+      
+    }
+  /* TECH CATEGORIES - MÁRGENES CORREGIDOS */
+.tech-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem auto 0 auto; /* Centrado */
+  max-width: 1200px; /* Mismo ancho que otras secciones */
+  padding: 0 2rem; /* Mismo padding que otras secciones */
+}
+
+.tech-category {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  width: 100%; /* Asegurar que no se desborde */
+}
+
+.tech-category:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(34, 255, 102, 0.1);
+}
+
+.tech-category-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-tag {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .tech-categories {
+    grid-template-columns: 1fr;
+    padding: 0 1rem; /* Menos padding en móvil */
+    margin: 2rem auto 0 auto;
+  }
+  
+  .tech-category {
+    padding: 1.5rem;
+  }
+  
+  .tech-tags {
+    gap: 0.3rem;
+  }
+  
+  .tech-tag {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+/* CHAT SUGGESTIONS ARREGLADAS */
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.suggestion-bubble {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.suggestion-bubble:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(34, 255, 102, 0.2);
+}
+
+.suggestion-bubble:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.suggestion-bubble.used {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: scale(0.95);
+}
+
+.suggestion-bubble.used:hover {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border);
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
+.chat-suggestions.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Efecto ripple más sutil para sugerencias */
+.suggestion-bubble.ripple:before {
+  background: rgba(34, 255, 102, 0.2);
+}
+
+.suggestion-bubble.ripple:active:before {
+  width: 120px;
+  height: 120px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .suggestion-bubble {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    gap: 0.3rem;
+  }
+  
+  .chat-suggestions {
+    gap: 0.4rem;
+    margin: 0 -0.5rem 1rem -0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .suggestion-bubble {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .chat-suggestions {
+    gap: 0.3rem;
+  }
+}
+
+/* CHAT SECTION MEJORADA */
+.chat-section {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem;
+  margin: 2rem auto;
+  backdrop-filter: blur(20px);
+  max-width: 900px;
+}
+
+.chat-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.chat-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--glass);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+/* HERO SPACING MEJORADO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(34, 255, 102, 0.1) 0%, transparent 70%);
+  padding-top: 120px; /* Espacio para el menú */
+}
+
+.hero-content {
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  margin-top: 2rem; /* Separación adicional del menú */
+}
+
+/* RESPONSIVE PARA SUGERENCIAS */
+@media (max-width: 768px) {
+  .chat-suggestions {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    padding: 0;
+  }
+  
+  .suggestion-bubble {
+    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    min-height: 50px;
+  }
+  
+  .chat-section {
+    margin: 1rem;
+    padding: 2rem;
+  }
+  
+  .hero {
+    padding-top: 140px; /* Más espacio en móvil */
+  }
+  
+  .hero-content {
+    margin-top: 1rem;
+  }
+}
+/* 🎪 MICRO-INTERACCIONES PREMIUM - RIPPLE EFFECTS */
+
+/* Contenedor para el efecto ripple */
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* El efecto ripple en sí */
+.ripple:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Activación del ripple */
+.ripple:active:before {
+  width: 300px;
+  height: 300px;
+  transition: width 0s, height 0s;
+}
+
+/* Ripple específico para botones con accent */
+.ripple.accent:before {
+  background: rgba(34, 255, 102, 0.4);
+}
+
+/* Ripple específico para botones secondary */
+.ripple.secondary:before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ripple para elementos más pequeños */
+.ripple.small:active:before {
+  width: 150px;
+  height: 150px;
+}
+
+/* Ripple más sutil para cards */
+.ripple.subtle:before {
+  background: rgba(34, 255, 102, 0.15);
+}
+
+.ripple.subtle:active:before {
+  width: 200px;
+  height: 200px;
+}
+
+/* Asegurar que el contenido esté por encima del ripple */
+.ripple > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* VIDEO PORTFOLIO OPTIMIZADO */
+.video-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin: 3rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.5s ease;
+}
+
+.video-portfolio-grid.hidden {
+  display: none;
+}
+
+.video-item {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.video-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-item:hover video {
+  opacity: 0.7;
+  transform: scale(1.05);
+}
+
+.video-item .description {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 12px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+.video-item:hover .description {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+.video-item .description:hover {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: var(--accent);
+}
+
+/* Skeleton para videos */
+.skeleton {
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.8) 25%, rgba(17, 17, 17, 0.8) 50%, rgba(34, 34, 34, 0.8) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.skeleton.loaded {
+  display: none;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+.video-controls {
+  margin: 2rem 0;
+}
+
+.video-controls button {
+  transition: all 0.3s ease;
+}
+
+.video-controls button.hidden {
+  display: none;
+}
+
+.video-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--glass);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Animación de carga suave */
+.video-portfolio-grid.loading {
+  opacity: 0.7;
+  transform: translateY(10px);
+}
+
+.video-portfolio-grid.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive para videos */
+@media (max-width: 768px) {
+  .video-portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .video-item .description {
+    font-size: 0.7rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .video-portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsive para videos */
+@media (max-width: 768px) {
+  .video-portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .video-item .description {
+    font-size: 0.7rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .video-portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .video-portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .video-portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- CUSTOM CURSOR -->
+  <div class="custom-cursor"></div>
+  <div class="custom-cursor-follower"></div>
+  
+  <!-- DYNAMIC GRADIENT BACKGROUND -->
+  <div class="gradient-bg"></div>
+  
+  <!-- PAGE TRANSITION -->
+  <div class="page-transition"></div>
+  
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+  
+  <!-- SCROLL INDICATOR -->
+  <div class="scroll-indicator">
+    <div class="scroll-dot active" data-section="hero"></div>
+    <div class="scroll-dot" data-section="timeline"></div>
+    <div class="scroll-dot" data-section="apps"></div>
+    <div class="scroll-dot" data-section="videos"></div>
+    <div class="scroll-dot" data-section="roles"></div>
+    <div class="scroll-dot" data-section="chat"></div>
+    <div class="scroll-dot" data-section="contact"></div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" id="theme-toggle">🌙</button>
+
+  <!-- NAVIGATION -->
+  <nav class="nav glass-dynamic">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#hero" class="nav-link active cursor-hover">Inicio</a></li>
+      <li class="nav-item"><a href="#timeline" class="nav-link cursor-hover">Timeline</a></li>
+      <li class="nav-item"><a href="#apps" class="nav-link cursor-hover">Apps</a></li>
+      <li class="nav-item"><a href="#videos" class="nav-link cursor-hover">Videos</a></li>
+      <li class="nav-item"><a href="#roles" class="nav-link cursor-hover">Roles</a></li>
+      <li class="nav-item"><a href="#chat" class="nav-link cursor-hover">Chat</a></li>
+      <li class="nav-item"><a href="#contact" class="nav-link cursor-hover">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO SECTION -->
+<section id="hero" class="hero section-enhanced">
+  <div class="float-bg-element"></div>
+  <div class="float-bg-element"></div>
+  <div class="float-bg-element"></div>
+  <div class="floating-particles" id="floating-particles"></div>
+  <div class="hero-content">
+    <h1 class="scale-in">Mariano Zuccarello</h1>
+    <p class="hero-subtitle slide-in-left">Consultor Creativo | Desarrollador IA | Realizador Audiovisual | Productor Musical</p>
+    <p class="hero-description slide-in-right">
+      Me especializo en el desarrollo de aplicaciones con inteligencia artificial, dirección de proyectos audiovisuales con IA, 
+      y creación de experiencias inmersivas para artistas, instituciones y festivales. Mi enfoque integra arte, tecnología y cuerpo 
+      en un concepto que llamo <strong style="color: var(--accent);">electrobiotica</strong>: un puente entre la inteligencia natural y artificial, 
+      lo analógico y lo digital, la interfaz y la experiencia sensible.
+    </p>
+    <div class="cta-buttons fade-in">
+  <a href="#apps" class="cta-button ripple accent btn-premium cursor-hover">
+    Explorar Apps →
+  </a>
+  <a href="#contact" class="cta-button secondary ripple secondary btn-premium cursor-hover">
+    Contactar 💬
+  </a>
+</div>
+  </div>
+</section>
+
+ <!-- TIMELINE SECTION -->
+<section id="timeline" class="section fade-in">
+  <div class="section-header">
+    <h2 class="section-title">Mi Evolución</h2>
+    <p class="section-subtitle">
+      Del código a la inteligencia artificial: un viaje hacia la electrobiotica
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-title">Primeras Apps Web</div>
+        <div class="timeline-description">
+          Desarrollo inicial con Flask y Python. Enfoque en soluciones simples y efectivas para problemas reales.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2021</div>
+        <div class="timeline-title">Especialización en IA</div>
+        <div class="timeline-description">
+          Integración de GPT y OpenAI APIs. Primeros experimentos con procesamiento de lenguaje natural y visión computacional.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-title">Producción Musical + DAW</div>
+        <div class="timeline-description">
+          Dominio de Ableton Live, Pro Tools, FL Studio. Creación de music@senlinea como red independiente.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-title">IA Audiovisual</div>
+        <div class="timeline-description">
+          +60 videoclips con DALL·E, Veo, Runway. Proyectos premiados: SOMA CIUDADANA (98.5%), ARCA LEX (100%).
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-title">Shows Inmersivos</div>
+        <div class="timeline-description">
+          Experiencias audiovisuales con TouchDesigner, DMX, sensores. Fundación de INpulsa Fest.
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-title">Electrobiotica</div>
+        <div class="timeline-description">
+          Consultoría creativa integral. 8+ apps con IA, eventos culturales autogestivos, impacto social.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- APPS SECTION -->
+  <section id="apps" class="section fade-in">
+    <div class="section-header">
+      <h2 class="section-title">Apps & IA</h2>
+      <p class="section-subtitle">
+        Herramientas inteligentes diseñadas con privacidad y propósito
+      </p>
+    </div>
+
+    <!-- SEARCH & FILTERS -->
+    <div class="search-filters">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Buscar apps...">
+      </div>
+      
+      <div class="filters">
+        <div class="filter-tag active" data-filter="all">Todas</div>
+        <div class="filter-tag" data-filter="ia">IA</div>
+        <div class="filter-tag" data-filter="salud">Salud</div>
+        <div class="filter-tag" data-filter="legal">Legal</div>
+        <div class="filter-tag" data-filter="educacion">Educación</div>
+        <div class="filter-tag" data-filter="cultura">Cultura</div>
+      </div>
+    </div>
+
+    <div class="apps-grid" id="apps-grid">
+      <!-- Apps will be populated by JavaScript -->
+    </div>
+<!-- VIDEO PORTFOLIO SECTION -->
+<section id="videos" class="section fade-in">
+  <div class="section-header">
+    <h2 class="section-title">🎥 Video Portfolio</h2>
+    <p class="section-subtitle">
+      Videos destacados de +60 videoclips creados con IA para artistas internacionales
+    </p>
+  </div>
+
+  <!-- VIDEOS DESTACADOS (Solo 9 inicialmente) -->
+  <div class="video-portfolio-grid" id="featured-videos">
+    
+    <!-- VIDEO DESTACADO 1 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/61.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='';">
+        ⭐ Alex Lifeson | Promise (Release Soon)
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 2 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/01.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=uXE90ncyUTs';">
+        ⭐ Today Was Yesterday | My New Low | ft. Alex Lifeson (Rush)
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 3 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/06.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=-auAxRx99gA';">
+        ⭐ Envy Of None | Not Dead Yet
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 4 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/00.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=rG6pz4LkKEk';">
+        ⭐ Ventus Band | Find My Way
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 5 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/02.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=XL9Jk33fd3Y';">
+        ⭐ Today Was Yesterday | If I Fall | ft. Robby Krieger (The Doors)
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 6 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/04.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/v1/video-attachments/delivery/asset/f2b3fc2de974a834adb836ecba48451e-1732053228/aradia_sunshower_final_4k';">
+        ⭐ Aradia | SunShower
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 7 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/18.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=S2Dm9fIaTwo';">
+        ⭐ Hi Tide | High On You
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 8 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/32.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=5J6-uqvJcNg';">
+        ⭐ Hi Tide | Daydream
+      </div>
+    </div>
+
+    <!-- VIDEO DESTACADO 9 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/25.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=_UYY--ue844';">
+        ⭐ Sar Kamler | Butterfly
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VIDEOS ADICIONALES (Ocultos inicialmente) -->
+  <div class="video-portfolio-grid hidden" id="additional-videos">
+    
+    <!-- VIDEO 10 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/03.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://youtu.be/WF1HBUHOxNk';">
+        Pini Gurfil | Monica
+      </div>
+    </div>
+
+    <!-- VIDEO 11 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/05.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://youtu.be/XT3ZHg3vS5E';">
+        Banda Ventus | Hello
+      </div>
+    </div>
+
+    <!-- VIDEO 12 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/07.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://youtu.be/W_ubBrAhpks';">
+        Alison Newman | Things Are About To Get Dark
+      </div>
+    </div>
+
+    <!-- VIDEO 13 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/08.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=ewz1OV3umKU';">
+        J.cowan & Whitefox | Dear Diary
+      </div>
+    </div>
+
+    <!-- VIDEO 14 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/09.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='#';">
+        J. Cowan & Whitefox | Dear Diary | 06.15.59
+      </div>
+    </div>
+
+    <!-- VIDEO 15 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/10.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://www.youtube.com/watch?v=LesimqUz92I';">
+        Larhythmix | Sky
+      </div>
+    </div>
+
+    <!-- VIDEO 16 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/11.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='#';">
+        Promo Video
+      </div>
+    </div>
+
+    <!-- VIDEO 17 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/12.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='';">
+        Going Green
+      </div>
+    </div>
+
+    <!-- VIDEO 18 -->
+    <div class="video-item">
+      <div class="skeleton"></div>
+      <video playsinline muted autoplay loop class="lazyload" data-src="http://marianobiotico.pages.dev/videos/13.mp4" tabindex="0" onloadeddata="this.previousElementSibling.classList.add('loaded')">
+        <source type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="description" onclick="location.href='https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/mj0hh2zcmcy3bqqgnbfd';">
+        Nicola Brescia | Illuminated With the light of love
+      </div>
+    </div>
+
+    <!-- Continuar con todos los videos restantes... -->
+    <!-- [Se pueden agregar todos los demás videos aquí] -->
+
+  </div>
+
+  <!-- CONTROLES DE CARGA -->
+  <div class="video-controls" style="text-align: center; margin-top: 2rem;">
+    <button id="load-more-videos" class="cta-button secondary ripple btn-premium cursor-hover">
+      Ver Más Videos (+53) 📽️
+    </button>
+    <button id="show-less-videos" class="cta-button secondary ripple btn-premium cursor-hover hidden">
+      Ver Menos ↑
+    </button>
+  </div>
+
+  <!-- Estadísticas de videos -->
+  <div class="video-stats">
+    <div class="stat-item">
+      <span class="stat-number">62+</span>
+      <span class="stat-label">Videoclips Creados</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Calificaciones Positivas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">15+</span>
+      <span class="stat-label">Países</span>
+    </div>
+  </div>
+
+  <!-- Call to Action para videos -->
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="https://wa.me/5491127278058" class="cta-button ripple accent btn-premium cursor-hover">
+      🎬 Solicitar Videoclip Personalizado
+    </a>
+  </div>
+</section>
+ 
+    <!-- TESTIMONIALS -->
+    <div class="testimonials fade-in">
+      <div class="testimonial">
+        <p class="testimonial-text">
+          "Las apps de Mariano combinan funcionalidad real con diseño intuitivo. 
+          Terapeuta-AI me ayudó a entender mejor mis patrones emocionales."
+        </p>
+        <p class="testimonial-author">— Usuario de Terapeuta-AI</p>
+      </div>
+      
+      <div class="testimonial">
+        <p class="testimonial-text">
+          "MultiContratos me salvó de firmar un contrato abusivo. 
+          La IA detectó cláusulas problemáticas que yo había pasado por alto."
+        </p>
+        <p class="testimonial-author">— Inquilino empoderado</p>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-text">
+          "News Analyzer AI me ayuda a identificar sesgos en las noticias. 
+          Una herramienta indispensable para el pensamiento crítico."
+        </p>
+        <p class="testimonial-author">— Periodista independiente</p>
+      </div>
+    </div>
+  </section>
+
+ <!-- ROLES SECTION -->
+<section id="roles" class="section fade-in">
+  <div class="section-header">
+    <h2 class="section-title">🚀 ¿Qué Ofrezco?</h2>
+    <p class="section-subtitle">
+      Servicios especializados en la intersección de arte, tecnología y experiencias inmersivas
+    </p>
+  </div>
+
+  <div class="roles-grid">
+    <div class="role-card">
+      <span class="role-icon">🧠</span>
+      <h3 class="role-title">Consultoría Creativa & Tecnológica</h3>
+      <p class="role-description">
+        Workshops, asesoramiento en IA, dirección de proyectos, diseño de procesos y narrativas innovadoras.
+      </p>
+    </div>
+
+    <div class="role-card">
+      <span class="role-icon">💻</span>
+      <h3 class="role-title">Desarrollo de Apps con IA</h3>
+      <p class="role-description">
+        Aplicaciones web inteligentes con OpenAI, OCR, TTS, RAG, visión computacional y análisis semántico.
+      </p>
+    </div>
+
+    <div class="role-card">
+      <span class="role-icon">🎵</span>
+      <h3 class="role-title">Producción Musical DAW + IA</h3>
+      <p class="role-description">
+        Composición y mezcla con Ableton Live, Pro Tools, FL Studio. Integración con Suno, Udio, ElevenLabs.
+      </p>
+    </div>
+
+    <div class="role-card">
+      <span class="role-icon">🎥</span>
+      <h3 class="role-title">Animación por Encargo con IA</h3>
+      <p class="role-description">
+        +60 videoclips híbridos con DALL·E, Veo, Runway, ComfyUI, AnimateDiff. 100% calificaciones positivas.
+      </p>
+    </div>
+
+    <div class="role-card">
+      <span class="role-icon">🌐</span>
+      <h3 class="role-title">Shows Inmersivos e Interactivos</h3>
+      <p class="role-description">
+        Experiencias audiovisuales con luces DMX, sensores, mapping, interfaces corporales y musicales.
+      </p>
+    </div>
+
+    <div class="role-card">
+      <span class="role-icon">🎪</span>
+      <h3 class="role-title">Producción de Eventos</h3>
+      <p class="role-description">
+        Dirección artística, técnica y logística de festivales como INpulsa Fest. Gestión cultural autogestiva.
+      </p>
+    </div>
+  </div>
+
+  
+
+  <!-- HERRAMIENTAS IA -->
+  <div class="section-header" style="margin-top: 6rem;">
+    <h2 class="section-title">🧠 Stack Tecnológico</h2>
+    <p class="section-subtitle">
+      Herramientas IA y tecnologías que domino para crear experiencias únicas
+    </p>
+  </div>
+
+  <div class="tech-categories">
+    <div class="tech-category">
+      <h4 class="tech-category-title">Texto y Lenguaje</h4>
+      <div class="tech-tags">
+        <span class="tech-tag">GPT-4o</span>
+        <span class="tech-tag">Claude</span>
+        <span class="tech-tag">Gemini</span>
+        <span class="tech-tag">Llama 3</span>
+        <span class="tech-tag">LM Studio</span>
+        <span class="tech-tag">Ollama</span>
+      </div>
+    </div>
+
+    <div class="tech-category">
+      <h4 class="tech-category-title">Audio / Música</h4>
+      <div class="tech-tags">
+        <span class="tech-tag">Ableton Live</span>
+        <span class="tech-tag">Pro Tools</span>
+        <span class="tech-tag">Suno</span>
+        <span class="tech-tag">Udio</span>
+        <span class="tech-tag">ElevenLabs</span>
+        <span class="tech-tag">MusicGen</span>
+      </div>
+    </div>
+
+    <div class="tech-category">
+      <h4 class="tech-category-title">Imagen & Video</h4>
+      <div class="tech-tags">
+        <span class="tech-tag">Stable Diffusion</span>
+        <span class="tech-tag">DALL·E</span>
+        <span class="tech-tag">Runway</span>
+        <span class="tech-tag">Veo</span>
+        <span class="tech-tag">ComfyUI</span>
+        <span class="tech-tag">AnimateDiff</span>
+      </div>
+    </div>
+
+    <div class="tech-category">
+      <h4 class="tech-category-title">Interactivo</h4>
+      <div class="tech-tags">
+        <span class="tech-tag">TouchDesigner</span>
+        <span class="tech-tag">Max/MSP</span>
+        <span class="tech-tag">MadMapper</span>
+        <span class="tech-tag">Resolume</span>
+        <span class="tech-tag">DMX</span>
+        <span class="tech-tag">OBS Studio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT SECTION -->
+<section id="chat" class="section fade-in">
+  <div class="chat-section">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h3 class="chat-title">💬 Hablá con MarianoGPT</h3>
+        <p class="section-subtitle">Preguntame sobre apps, IA o electrobiotica</p>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="message bot">
+          ¡Hola! Soy MarianoGPT, tu asistente personal creado por Mariano Zuccarello. Preguntame sobre sus apps, tecnologías, proyectos de electrobiotica o cualquier cosa sobre su trabajo. ¿En qué puedo ayudarte?
+        </div>
+      </div>
+
+      <div class="chat-suggestions" id="chat-suggestions">
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="¿Qué apps desarrollaste?">
+    <span>💻</span> Apps
+  </div>
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="¿Cómo funciona Terapeuta-AI?">
+    <span>🧠</span> Terapeuta-AI
+  </div>
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="Contame sobre INpulsa Fest">
+    <span>🎪</span> INpulsa Fest
+  </div>
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="¿Qué tecnologías usás?">
+    <span>⚡</span> Tecnologías
+  </div>
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="¿Hacés animaciones con IA?">
+    <span>🎥</span> Animaciones
+  </div>
+  <div class="suggestion-bubble cursor-hover ripple" data-suggestion="¿Cómo trabajás con clientes?">
+    <span>🤝</span> Clientes
+  </div>
+</div>
+
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="¿Qué es la electrobiotica? ¿Cómo funciona Terapeuta-AI?">
+        <button class="chat-send ripple accent btn-premium" id="chat-send">Enviar</button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="section fade-in">
+    <div class="section-header">
+      <h2 class="section-title">¿Tenés un proyecto en mente?</h2>
+      <p class="section-subtitle">Podemos construirlo juntos</p>
+    </div>
+
+    <div class="contact-grid">
+     <a href="mailto:marianobiotico@gmail.com" class="contact-link ripple subtle btn-premium cursor-hover">
+  <span class="contact-icon">✉️</span>
+  <div>
+    <strong>Email</strong>
+    <p>marianobiotico@gmail.com</p>
+  </div>
+</a>
+
+      <a href="https://wa.me/5491127278058" target="_blank" class="contact-link ripple btn-premium cursor-hover">
+        <span class="contact-icon">💬</span>
+        <div>
+          <strong>WhatsApp</strong>
+          <p>Contacto directo</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/electrobiotica" target="_blank" class="contact-link ripple btn-premium cursor-hover">
+        <span class="contact-icon">🐙</span>
+        <div>
+          <strong>GitHub</strong>
+          <p>Código abierto</p>
+        </div>
+      </a>
+
+      <a href="https://instagram.com/marianobiotico" target="_blank" class="contact-link ripple btn-premium cursor-hover">
+        <span class="contact-icon">📸</span>
+        <div>
+          <strong>Instagram</strong>
+          <p>Contenido visual</p>
+        </div>
+      </a>
+
+      <a href="https://cafecito.app/marianobiotico" target="_blank" class="contact-link ripple btn-premium cursor-hover">
+        <span class="contact-icon heart-animation">☕</span>
+        <div>
+          <strong>Cafecito</strong>
+          <p>Apoyo al proyecto</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 marianobiotico.systems - Building intelligent tools for human insight</p>
+    <p style="margin-top: 1rem; font-size: 0.8rem;">
+      Hecho con ❤️ en Buenos Aires, Argentina
+    </p>
+  </footer>
+
+  <script>
+    // === OPENAI API CONFIGURATION ===
+    // TEMPORARY: For local testing only - move to server in production!
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    
+    // Get API key from environment variables or display error
+    async function getApiKey() {
+      // Try to get from environment variable first
+      if (typeof process !== 'undefined' && process.env && process.env.OPENAI_API_KEY) {
+        return process.env.OPENAI_API_KEY;
+      }
+      
+      // Try to get from a config endpoint (you'll need to create this)
+      try {
+        const response = await fetch('/api/config.json');
+        if (response.ok) {
+          const config = await response.json();
+          return config.openaiApiKey;
+        }
+      } catch (error) {
+        console.warn('Could not fetch API key from server - using temporary key for testing');
+      }
+      
+      // Temporary fallback for local testing
+      return TEMP_API_KEY;
+    }
+
+    const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+
+    // === APPS DATA ===
+    const apps = [
+      { 
+        nombre: "Terapeuta-AI",
+        desc: "Asistente psicológico configurable por enfoque terapéutico. Herramienta de autoconocimiento y apoyo emocional.",
+        link: "https://terapeuta-ai.onrender.com",
+        icon: "🧠",
+        img: "./images/tuterapiaai-c.webp",
+        category: "salud",
+        tags: ["IA", "Psicología", "Flask", "GPT"],
+        status: "online"
+      },
+      { 
+        nombre: "Te Lo Resumo AI Nomás",
+        desc: "Resumí textos, artículos o links automáticamente. Procesamiento inteligente de información.",
+        link: "https://teloresumoainomas.onrender.com",
+        icon: "📝",
+        img: "./images/teloresumo-c.webp",
+        category: "ia",
+        tags: ["IA", "NLP", "Productividad"],
+        status: "online"
+      },
+      { 
+        nombre: "News Analyzer AI",
+        desc: "Análisis de sesgo político en medios digitales. Transparencia informativa con IA.",
+        link: "https://news-analyzer-ai.onrender.com",
+        icon: "📰",
+        img: "./images/newsanalyzerai-c.webp",
+        category: "ia",
+        tags: ["IA", "Análisis", "Medios"],
+        status: "online"
+      },
+      { 
+        nombre: "MultiContratos",
+        desc: "Analizador legal para contratos de alquiler, trabajo, música. Empoderamiento ciudadano.",
+        link: "https://multicontratos.onrender.com",
+        icon: "📋",
+        img: "./images/multicontratos-c.webp",
+        category: "legal",
+        tags: ["Legal", "IA", "Contratos"],
+        status: "online"
+      },
+      { 
+        nombre: "Lyric Explainer AI",
+        desc: "Interpretá letras de canciones con IA. Análisis cultural y literario de música.",
+        link: "https://lyricexplainerai.onrender.com",
+        icon: "🎵",
+        img: "./images/lyric-c.webp",
+        category: "cultura",
+        tags: ["IA", "Música", "Análisis"],
+        status: "online"
+      },
+      { 
+        nombre: "Examnia",
+        desc: "Generador de exámenes en PDF y DOCX. Herramienta educativa inteligente.",
+        link: "https://examnia.onrender.com",
+        icon: "📚",
+        img: "./images/examgen-c.webp",
+        category: "educacion",
+        tags: ["Educación", "PDF", "IA"],
+        status: "online"
+      },
+      { 
+        nombre: "DR.AI Argentina",
+        desc: "Agente médico experimental con análisis sintomático local. Salud accesible.",
+        link: "https://dr-ai-ar.onrender.com",
+        icon: "⚕️",
+        img: "./images/drai-c.webp",
+        category: "salud",
+        tags: ["Salud", "IA", "Argentina"],
+        status: "online"
+      },
+      { 
+        nombre: "INpulsa Fest",
+        desc: "Sitio oficial de organización y multimedia del evento. Gestión cultural integral.",
+        link: "#",
+        icon: "🎪",
+        img: "./images/inpulsa.jpg",
+        category: "cultura",
+        tags: ["Eventos", "Gestión", "Cultura"],
+        status: "offline"
+      }
+    ];
+
+    // === MARIANO'S UPDATED CONTEXT FOR AI ===
+const marianoContext = `Eres MarianoGPT, el asistente personal de Mariano Zuccarello. Respondes como si fueras él mismo, usando un tono casual argentino, inteligente y directo.
+
+INFORMACIÓN SOBRE MARIANO ZUCCARELLO:
+
+👨‍💻 CONSULTOR CREATIVO | DESARROLLADOR IA | REALIZADOR AUDIOVISUAL | PRODUCTOR MUSICAL:
+- Se especializa en desarrollo de aplicaciones con IA, dirección de proyectos audiovisuales con IA, y creación de experiencias inmersivas
+- Concepto "electrobiotica": puente entre inteligencia natural y artificial, lo analógico y digital, interfaz y experiencia sensible
+- Trabajo con artistas, instituciones y festivales
+
+🚀 SERVICIOS QUE OFRECE:
+1. Consultoría creativa y tecnológica: Workshops, asesoramiento en IA, dirección de proyectos
+2. Desarrollo de apps con IA: OpenAI, OCR, TTS, RAG, visión computacional, análisis semántico
+3. Producción musical DAW + IA: Ableton Live, Pro Tools, FL Studio, Cubase, Logic Pro, Reason + Suno, Udio, MusicGen, ElevenLabs
+4. Animación por encargo con IA: +60 videoclips con DALL·E, Veo, Runway, ComfyUI, AnimateDiff
+5. Shows inmersivos e interactivos: DMX, sensores, mapping, interfaces corporales
+6. Producción de eventos: INpulsa Fest, dirección artística y logística
+
+🧠 STACK TECNOLÓGICO:
+Texto/Lenguaje: GPT-4o, Claude, Gemini, Qwen, Mistral, Llama 3, LM Studio, Ollama
+Audio/Música: Ableton Live, Pro Tools, Cubase, FL Studio, Logic, Reason, Suno, Udio, MusicGen, ElevenLabs
+Imagen: Stable Diffusion, DALL·E, Midjourney, Leonardo AI, ControlNet
+Video: Runway, Veo, Sora, Pika, AnimateDiff, Kaiber
+Código: Python, Flask, JavaScript, HTML, Tailwind, APIs REST, OCR, PDF, TTS, RAG
+Audiovisual/Interactivo: TouchDesigner, Max/MSP, MadMapper, Resolume, Adobe Suite, OBS Studio
+
+🎯 LOGROS DESTACADOS:
+- +60 videoclips con IA y 100% calificaciones positivas en Fiverr
+- Fundador de INpulsa Fest (evento cultural autogestivo)
+- Proyectos premiados: SOMA CIUDADANA (98.5%), ARCA LEX (100%)
+- Creador de music@senlinea (red independiente)
+- Compromiso social: charlas vecinales, asesoramiento ciudadano
+- 8+ apps desarrolladas activas
+
+APPS PRINCIPALES:
+1. Terapeuta-AI: Asistente psicológico configurable
+2. MultiContratos: Analizador legal para contratos
+3. News Analyzer AI: Análisis de sesgo en medios
+4. Te Lo Resumo AI: Procesamiento inteligente de textos
+5. DR.AI Argentina: Agente médico experimental
+6. Lyric Explainer AI: Interpretación cultural de música
+7. Examnia: Generador de exámenes educativos
+
+🌍 DISPONIBILIDAD:
+Abierto a colaboraciones freelance o institucionales, remota o presencial, proyectos nacionales o globales.
+
+PERSONALIDAD:
+- Casual pero profesional, argentino
+- Apasionado por la electrobiotica y el impacto social
+- Experimental e innovador
+- Combina arte, tecnología y experiencias inmersivas
+
+Respondé siempre como Mariano, en primera persona, con conocimiento detallado de sus proyectos y filosofía electrobiotica.`;
+
+    // === GLOBAL STATE ===
+    let filteredApps = [...apps];
+    let chatHistory = [];
+
+    // === OPENAI API CALL ===
+    async function callOpenAI(userMessage) {
+      try {
+        const apiKey = await getApiKey();
+        
+        if (!apiKey) {
+          throw new Error('API key not configured');
+        }
+
+        const messages = [
+          { role: "system", content: marianoContext },
+          ...chatHistory,
+          { role: "user", content: userMessage }
+        ];
+
+        const response = await fetch(OPENAI_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: messages,
+            max_tokens: 500,
+            temperature: 0.7
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+        
+        // Update chat history
+        chatHistory.push({ role: "user", content: userMessage });
+        chatHistory.push({ role: "assistant", content: aiResponse });
+        
+        // Keep only last 10 messages to avoid token limits
+        if (chatHistory.length > 10) {
+          chatHistory = chatHistory.slice(-10);
+        }
+        
+        return aiResponse;
+
+      } catch (error) {
+        console.error('Error calling OpenAI:', error);
+        if (error.message.includes('API key')) {
+          return `🔑 El chat requiere configuración del servidor. Mientras tanto, podés escribirme a marianobiotico@gmail.com o WhatsApp para cualquier consulta sobre mis proyectos.`;
+        }
+        return `¡Uy! Tuve un problema técnico. Pero tranqui, podés preguntarme sobre mis apps, proyectos o escribirme directamente a marianobiotico@gmail.com 😊`;
+      }
+    }
+
+    // === PROGRESS BAR ===
+    function updateProgressBar() {
+      const progressBar = document.getElementById('progress-bar');
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = scrollPercent + '%';
+    }
+
+    // === THEME TOGGLE ===
+    function initThemeToggle() {
+      const toggle = document.getElementById('theme-toggle');
+      let isDark = true; // Default dark theme
+
+      toggle.addEventListener('click', () => {
+        isDark = !isDark;
+        
+        if (isDark) {
+          document.documentElement.style.setProperty('--bg-primary', '#0a0a0a');
+          document.documentElement.style.setProperty('--bg-secondary', '#111111');
+          document.documentElement.style.setProperty('--text-primary', '#ffffff');
+          document.documentElement.style.setProperty('--text-secondary', '#a0a0a0');
+          document.documentElement.style.setProperty('--glass', 'rgba(255, 255, 255, 0.05)');
+          document.documentElement.style.setProperty('--border', 'rgba(255, 255, 255, 0.1)');
+          toggle.textContent = '🌙';
+        } else {
+          document.documentElement.style.setProperty('--bg-primary', '#ffffff');
+          document.documentElement.style.setProperty('--bg-secondary', '#f8f9fa');
+          document.documentElement.style.setProperty('--text-primary', '#111111');
+          document.documentElement.style.setProperty('--text-secondary', '#666666');
+          document.documentElement.style.setProperty('--glass', 'rgba(0, 0, 0, 0.05)');
+          document.documentElement.style.setProperty('--border', 'rgba(0, 0, 0, 0.1)');
+          toggle.textContent = '☀️';
+        }
+      });
+    }
+
+    // === NAVIGATION ===
+    function initNavigation() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+          
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+
+      // Update nav on scroll
+      window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPos = window.scrollY + 100;
+        
+        sections.forEach(section => {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          const id = section.getAttribute('id');
+          
+          if (scrollPos >= top && scrollPos <= bottom) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    // === SEARCH & FILTER ===
+    function initSearchAndFilter() {
+      const searchInput = document.getElementById('search-input');
+      const filterTags = document.querySelectorAll('.filter-tag');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        filterApps(query, getActiveFilter());
+      });
+
+      filterTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+          filterTags.forEach(t => t.classList.remove('active'));
+          tag.classList.add('active');
+          
+          const filter = tag.getAttribute('data-filter');
+          const query = searchInput.value.toLowerCase();
+          filterApps(query, filter);
+        });
+      });
+    }
+
+    function getActiveFilter() {
+      const activeTag = document.querySelector('.filter-tag.active');
+      return activeTag ? activeTag.getAttribute('data-filter') : 'all';
+    }
+
+    function filterApps(query = '', filter = 'all') {
+      filteredApps = apps.filter(app => {
+        const matchesSearch = !query || 
+          app.nombre.toLowerCase().includes(query) ||
+          app.desc.toLowerCase().includes(query) ||
+          app.tags.some(tag => tag.toLowerCase().includes(query));
+        
+        const matchesFilter = filter === 'all' || app.category === filter;
+        
+        return matchesSearch && matchesFilter;
+      });
+
+      renderApps();
+    }
+
+    // === APPS RENDERING ===
+    function renderApps() {
+      const grid = document.getElementById("apps-grid");
+      grid.innerHTML = "";
+      
+      filteredApps.forEach((app, index) => {
+        const card = document.createElement("div");
+        card.className = "app-card";
+        
+        card.innerHTML = `
+          <div class="app-image">
+            <img src="${app.img}" alt="${app.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="app-fallback" style="display:none;">${app.icon}</div>
+          </div>
+          <div class="app-content">
+            <div class="app-header">
+              <h3 class="app-title">${app.nombre}</h3>
+              <span class="app-category">${app.category.toUpperCase()}</span>
+            </div>
+            <p class="app-description">${app.desc}</p>
+            <div class="app-tags">
+              ${app.tags.map(tag => `<span class="app-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="app-footer">
+              <a href="${app.link}" target="_blank" class="app-link cursor-hover">
+                Ver app →
+              </a>
+              <div class="app-status">
+                <div class="status-dot ${app.status}"></div>
+                <span>${app.status === 'online' ? 'Online' : 'Offline'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // === PREMIUM VISUAL EXPERIENCE ===
+    function initCustomCursor() {
+      const cursor = document.querySelector('.custom-cursor');
+      const follower = document.querySelector('.custom-cursor-follower');
+
+      if (!cursor || !follower) return;
+
+      let mouseX = 0, mouseY = 0;
+      let followerX = 0, followerY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+        cursor.classList.add('active');
+        follower.classList.add('active');
+      });
+
+      // Smooth follower animation
+      function animateFollower() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
+        
+        requestAnimationFrame(animateFollower);
+      }
+      animateFollower();
+
+      // Hide cursor when leaving window
+      document.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        follower.classList.remove('active');
+      });
+
+      // Hover effects
+      document.querySelectorAll('.cursor-hover').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          el.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          el.classList.remove('cursor-hover');
+        });
+      });
+    }
+
+    function initDynamicGlassmorphism() {
+      const glassElements = document.querySelectorAll('.glass-dynamic');
+      
+      document.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        glassElements.forEach(el => {
+          const elementTop = el.offsetTop;
+          const elementHeight = el.offsetHeight;
+          const windowHeight = window.innerHeight;
+          
+          if (scrolled > elementTop - windowHeight && scrolled < elementTop + elementHeight) {
+            const intensity = Math.min(20, (scrolled - elementTop + windowHeight) / 50);
+            el.style.backdropFilter = `blur(${intensity}px)`;
+          }
+        });
+      });
+    }
+
+    function initScrollIndicator() {
+      const dots = document.querySelectorAll('.scroll-dot');
+      const sections = document.querySelectorAll('section[id]');
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const sectionId = dot.getAttribute('data-section');
+          const section = document.getElementById(sectionId);
+          
+          if (section) {
+            triggerPageTransition(() => {
+              section.scrollIntoView({ behavior: 'smooth' });
+            });
+          }
+        });
+      });
+
+      // Update active dot on scroll
+      window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY + 100;
+        
+        sections.forEach((section, index) => {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          
+          if (scrollPos >= top && scrollPos <= bottom) {
+            dots.forEach(dot => dot.classList.remove('active'));
+            if (dots[index]) dots[index].classList.add('active');
+          }
+        });
+      });
+    }
+
+    function triggerPageTransition(callback) {
+      const transition = document.querySelector('.page-transition');
+      
+      transition.classList.add('active');
+      
+      setTimeout(() => {
+        if (callback) callback();
+        transition.classList.add('exit');
+        transition.classList.remove('active');
+        
+        setTimeout(() => {
+          transition.classList.remove('exit');
+        }, 600);
+      }, 300);
+    }
+
+    function initLazyLoading() {
+      const lazyImages = document.querySelectorAll('.image-lazy');
+      
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            const skeleton = img.parentElement.querySelector('.skeleton');
+            
+            img.onload = () => {
+              img.classList.add('loaded');
+              if (skeleton) skeleton.style.display = 'none';
+            };
+            
+            img.onerror = () => {
+              img.classList.add('error');
+              if (skeleton) skeleton.style.display = 'none';
+            };
+            
+            // Start loading
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+            }
+            
+            imageObserver.unobserve(img);
+          }
+        });
+      });
+
+      lazyImages.forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+
+    function initScrollParallax() {
+      const floatingElements = document.querySelectorAll('.float-bg-element');
+      
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        floatingElements.forEach((el, index) => {
+          const speed = 0.5 + (index * 0.2);
+          const yPos = -(scrolled * speed);
+          el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+      });
+    }
+
+    function initSectionEnhancement() {
+      const sections = document.querySelectorAll('.section-enhanced');
+      
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      }, {
+        threshold: 0.3
+      });
+
+      sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+    }
+
+    // === FLOATING PARTICLES ===
+    function createFloatingParticles() {
+      const container = document.getElementById('floating-particles');
+      if (!container) return;
+      
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        container.appendChild(particle);
+      }
+    }
+// === 🎪 EFECTO MAGNÉTICO MEJORADO - MÁS SUTIL ===
+
+// Actualizar la función del efecto magnético en AdvancedButtonManager
+function updateMagneticEffect() {
+  if (window.advancedButtonManager) {
+    // Reducir significativamente la intensidad
+    advancedButtonManager.magneticStrength = 0.08; // Reducido de 0.3
+    
+    // Sobrescribir el método con versión más sutil
+    advancedButtonManager.initMagneticEffect = function(button) {
+      if (window.innerWidth <= 768) return; // Skip en móvil
+      
+      // Excluir contact-links del efecto magnético completo
+      if (button.classList.contains('contact-link') || 
+          button.classList.contains('suggestion-bubble')) {
+        return;
+      }
+      
+      button.addEventListener('mousemove', (e) => {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        // Movimiento mucho más sutil
+        const moveX = x * this.magneticStrength;
+        const moveY = y * this.magneticStrength;
+        
+        // Limitar el movimiento máximo
+        const maxMove = 3; // Máximo 3px de movimiento
+        const clampedX = Math.max(-maxMove, Math.min(maxMove, moveX));
+        const clampedY = Math.max(-maxMove, Math.min(maxMove, moveY));
+        
+        button.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translate(0, 0)';
+      });
+    };
+    
+    // Re-aplicar a botones existentes con la nueva configuración
+    document.querySelectorAll('.cta-button').forEach(button => {
+      // Limpiar listeners anteriores clonando el elemento
+      const newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+      
+      // Aplicar nuevo efecto magnético solo a CTA buttons
+      advancedButtonManager.initMagneticEffect(newButton);
+    });
+  }
+}
+
+// Función para desactivar completamente el magnético si molesta
+function disableMagneticEffect() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .btn-magnetic {
+      transform: none !important;
+    }
+    .btn-premium:hover {
+      transform: translateY(-1px) scale(1.01) !important;
+    }
+    .contact-link.btn-premium:hover {
+      transform: translateY(-1px) !important;
+    }
+  `;
+  document.head.appendChild(style);
+  
+  if (window.toastManager) {
+    toastManager.info('Efecto magnético desactivado para mejor fluidez');
+  }
+}
+
+// Aplicar mejoras cuando esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    updateMagneticEffect();
+    console.log('🎪 Magnetic effect updated - more subtle now!');
+  }, 1000);
+});
+
+// Opción para desactivar completamente si sigue molestando
+// Descomenta la siguiente línea si prefieres sin magnético:
+// setTimeout(() => disableMagneticEffect(), 1500);
+    // === MAGNETIC EFFECT FOR BUTTONS ===
+    function initMagneticEffect() {
+      const magneticElements = document.querySelectorAll('.cta-button, .contact-link');
+      
+      magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'translate(0, 0)';
+        });
+      });
+    }
+
+    // === ENHANCED HOVER EFFECTS ===
+    function initEnhancedHoverEffects() {
+      // Cards tilt effect
+      const cards = document.querySelectorAll('.app-card, .role-card');
+      
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = (y - centerY) / 10;
+          const rotateY = (centerX - x) / 10;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+      });
+    }
+
+    // === METRICS COUNTER ===
+    function animateCounters() {
+      const counters = document.querySelectorAll('.metric-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 50;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          counter.textContent = Math.floor(current);
+        }, 30);
+      });
+    }
+
+    // === CHAT FUNCTIONALITY ===
+    function initChatSuggestions() {
+      const suggestions = document.querySelectorAll('.suggestion-bubble');
+      const chatInput = document.getElementById('chat-input');
+      const suggestionsContainer = document.getElementById('chat-suggestions');
+
+      suggestions.forEach(bubble => {
+        bubble.addEventListener('click', () => {
+          const suggestion = bubble.getAttribute('data-suggestion');
+          chatInput.value = suggestion;
+          
+          // Mark as used and hide
+          bubble.classList.add('used');
+          
+          // Auto-send the suggestion
+          setTimeout(() => {
+            sendMessage();
+            // Hide suggestions after first use
+            setTimeout(() => {
+              suggestionsContainer.classList.add('hidden');
+            }, 1000);
+          }, 200);
+        });
+      });
+
+      // Hide suggestions when user starts typing
+      chatInput.addEventListener('input', () => {
+        if (chatInput.value.length > 0) {
+          suggestionsContainer.classList.add('hidden');
+        } else {
+          suggestionsContainer.classList.remove('hidden');
+        }
+      });
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const messages = document.getElementById('chat-messages');
+      const sendButton = document.getElementById('chat-send');
+      const text = input.value.trim();
+      
+      if (!text) return;
+
+      // Disable input and button
+      input.disabled = true;
+      sendButton.disabled = true;
+      sendButton.textContent = 'Enviando...';
+
+      // User message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = text;
+      messages.appendChild(userMsg);
+
+      // Loading message
+      const loadingMsg = document.createElement('div');
+      loadingMsg.className = 'message bot loading';
+      loadingMsg.textContent = 'Mariano está escribiendo...';
+      messages.appendChild(loadingMsg);
+
+      messages.scrollTop = messages.scrollHeight;
+      input.value = '';
+
+      try {
+        // Get AI response
+        const aiResponse = await callOpenAI(text);
+        
+        // Remove loading message
+        messages.removeChild(loadingMsg);
+        
+        // Bot response
+        const botMsg = document.createElement('div');
+        botMsg.className = 'message bot';
+        botMsg.innerHTML = aiResponse.replace(/\n/g, '<br>');
+        messages.appendChild(botMsg);
+        
+      } catch (error) {
+        // Remove loading message
+        messages.removeChild(loadingMsg);
+        
+        // Error response
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'message bot';
+        errorMsg.innerHTML = '¡Uy! Tuve un problema técnico. Probá de nuevo o escribime a marianobiotico@gmail.com 😊';
+        messages.appendChild(errorMsg);
+      }
+
+      // Re-enable input and button
+      input.disabled = false;
+      sendButton.disabled = false;
+      sendButton.textContent = 'Enviar';
+      input.focus();
+      
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // === INITIALIZATION ===
+    document.addEventListener('DOMContentLoaded', () => {
+      initThemeToggle();
+      initNavigation();
+      initSearchAndFilter();
+      
+      // Premium Visual Experience
+      initCustomCursor();
+      initDynamicGlassmorphism();
+      initScrollIndicator();
+      initLazyLoading();
+      initScrollParallax();
+      initSectionEnhancement();
+      
+      // Original features
+      createFloatingParticles();
+      initMagneticEffect();
+      initEnhancedHoverEffects();
+      renderApps();
+
+      // Enhanced intersection observer
+      const advancedObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            
+            const children = entry.target.querySelectorAll('.stagger-animation');
+            children.forEach((child, index) => {
+              setTimeout(() => {
+                child.classList.add('visible');
+              }, index * 150);
+            });
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .timeline-item').forEach((el) => {
+        advancedObserver.observe(el);
+      });
+
+      // Timeline visibility fix
+      setTimeout(() => {
+        document.querySelectorAll('.timeline-item').forEach(item => {
+          item.classList.add('visible');
+        });
+      }, 500);
+
+      // Scroll event listeners
+      window.addEventListener('scroll', updateProgressBar);
+
+      // Metrics animation
+      const metricsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            metricsObserver.unobserve(entry.target);
+          }
+        });
+      });
+
+      const metricsSection = document.querySelector('.metrics-grid');
+      if (metricsSection) {
+        metricsObserver.observe(metricsSection);
+      }
+
+      // Chat functionality
+      const chatInput = document.getElementById('chat-input');
+      const chatSend = document.getElementById('chat-send');
+
+      initChatSuggestions();
+      chatSend.addEventListener('click', sendMessage);
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      console.log('🚀 marianobiotico.systems loaded with PREMIUM VISUAL EXPERIENCE!');
+    });
+    // === 🎪 MICRO-INTERACCIONES PREMIUM - RIPPLE EFFECTS ===
+
+function initAdvancedRippleEffects() {
+  const rippleElements = document.querySelectorAll('.ripple');
+  
+  rippleElements.forEach(element => {
+    element.addEventListener('click', function(e) {
+      // Crear elemento ripple dinámico
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = size + 'px';
+      ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple-effect');
+      
+      // Remover ripples anteriores
+      const oldRipples = this.querySelectorAll('.ripple-effect');
+      oldRipples.forEach(oldRipple => oldRipple.remove());
+      
+      // Agregar nuevo ripple
+      this.appendChild(ripple);
+      
+      // Remover el ripple después de la animación
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+}
+
+// CSS dinámico para el ripple effect
+const rippleCSS = `
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  @keyframes ripple-animation {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+`;
+
+// Inyectar CSS
+const style = document.createElement('style');
+style.textContent = rippleCSS;
+document.head.appendChild(style);
+
+// Inicializar en DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  initAdvancedRippleEffects();
+  console.log('🎪 Ripple Effects initialized!');
+});
+// === 🎪 MICRO-INTERACCIONES PREMIUM - TOAST NOTIFICATIONS ===
+
+class ToastManager {
+  constructor() {
+    this.container = document.getElementById('toast-container');
+    if (!this.container) {
+      this.createContainer();
+    }
+  }
+
+  createContainer() {
+    this.container = document.createElement('div');
+    this.container.id = 'toast-container';
+    this.container.className = 'toast-container';
+    document.body.appendChild(this.container);
+  }
+
+  show(message, type = 'info', title = '', duration = 4000) {
+    const toast = this.createToast(message, type, title, duration);
+    this.container.appendChild(toast);
+
+    // Mostrar toast
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    // Auto-remover
+    setTimeout(() => {
+      this.removeToast(toast);
+    }, duration);
+
+    return toast;
+  }
+
+  createToast(message, type, title, duration) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+
+    const icons = {
+      success: '✅',
+      error: '❌',
+      warning: '⚠️',
+      info: 'ℹ️'
+    };
+
+    const titles = {
+      success: title || '¡Éxito!',
+      error: title || 'Error',
+      warning: title || 'Atención',
+      info: title || 'Info'
+    };
+
+    toast.innerHTML = `
+      <div class="toast-icon">${icons[type] || icons.info}</div>
+      <div class="toast-content">
+        <div class="toast-title">${titles[type]}</div>
+        <div class="toast-message">${message}</div>
+      </div>
+      <button class="toast-close" onclick="toastManager.removeToast(this.parentElement)">×</button>
+      <div class="toast-progress"></div>
+    `;
+
+    return toast;
+  }
+
+  removeToast(toast) {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      if (toast.parentElement) {
+        toast.parentElement.removeChild(toast);
+      }
+    }, 400);
+  }
+
+  // Métodos de conveniencia
+  success(message, title) {
+    return this.show(message, 'success', title);
+  }
+
+  error(message, title) {
+    return this.show(message, 'error', title);
+  }
+
+  warning(message, title) {
+    return this.show(message, 'warning', title);
+  }
+
+  info(message, title) {
+    return this.show(message, 'info', title);
+  }
+}
+
+// Instancia global
+let toastManager;
+
+// Inicializar toast manager
+function initToastNotifications() {
+  toastManager = new ToastManager();
+  
+  // Agregar toasts a eventos existentes
+  addToastEvents();
+  
+  console.log('🎪 Toast Notifications initialized!');
+}
+
+// Agregar toasts a eventos específicos
+function addToastEvents() {
+  // Toast al hacer click en contactar
+  document.querySelectorAll('a[href="#contact"]').forEach(link => {
+    link.addEventListener('click', () => {
+      toastManager.info('¡Scrolleando a la sección de contacto!', 'Navegación');
+    });
+  });
+
+  // Toast al hacer click en links de contacto
+  document.querySelectorAll('.contact-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const text = link.querySelector('strong')?.textContent || 'Contacto';
+      if (link.href.includes('mailto:')) {
+        toastManager.success(`Abriendo cliente de email para ${text}`, '📧 Email');
+      } else if (link.href.includes('wa.me')) {
+        toastManager.success(`Abriendo WhatsApp para chatear`, '💬 WhatsApp');
+      } else if (link.href.includes('github.com')) {
+        toastManager.info(`Visitando repositorio en GitHub`, '🐙 GitHub');
+      } else if (link.href.includes('instagram.com')) {
+        toastManager.info(`Abriendo perfil de Instagram`, '📸 Instagram');
+      } else if (link.href.includes('cafecito.app')) {
+        toastManager.success(`¡Gracias por apoyar el proyecto!`, '☕ Cafecito');
+      }
+    });
+  });
+
+  // Toast al enviar mensaje en chat
+  const originalSendMessage = window.sendMessage;
+  if (originalSendMessage) {
+    window.sendMessage = function() {
+      toastManager.info('Enviando mensaje a MarianoGPT...', '🤖 Chat');
+      return originalSendMessage.apply(this, arguments);
+    };
+  }
+
+  // Toast al copiar texto (si alguien selecciona y copia)
+  document.addEventListener('copy', () => {
+    toastManager.success('Texto copiado al portapapeles', '📋 Copiado');
+  });
+}
+
+// Inicializar en DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  initToastNotifications();
+});
+// === 🎪 MICRO-INTERACCIONES PREMIUM - TYPING ANIMATION ===
+
+class TypingAnimator {
+  constructor() {
+    this.isTyping = false;
+  }
+
+  // Typing básico letra por letra
+  typeText(element, text, speed = 50, callback = null) {
+    if (this.isTyping) return;
+    
+    this.isTyping = true;
+    element.textContent = '';
+    element.style.borderRight = '2px solid var(--accent)';
+    
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(timer);
+        // Mantener cursor parpadeando por un momento
+        setTimeout(() => {
+          element.style.borderRight = 'none';
+          this.isTyping = false;
+          if (callback) callback();
+        }, 1000);
+      }
+    }, speed);
+  }
+
+  // Typing con múltiples textos (rotación)
+  typeMultipleTexts(element, texts, speed = 100, pauseBetween = 2000) {
+    let currentIndex = 0;
+    
+    const typeNext = () => {
+      const text = texts[currentIndex];
+      this.typeText(element, text, speed, () => {
+        setTimeout(() => {
+          this.eraseText(element, speed / 2, () => {
+            currentIndex = (currentIndex + 1) % texts.length;
+            setTimeout(typeNext, 500);
+          });
+        }, pauseBetween);
+      });
+    };
+    
+    typeNext();
+  }
+
+  // Borrar texto
+  eraseText(element, speed = 30, callback = null) {
+    const text = element.textContent;
+    let i = text.length;
+    
+    element.style.borderRight = '2px solid var(--accent)';
+    
+    const timer = setInterval(() => {
+      if (i > 0) {
+        element.textContent = text.substring(0, i - 1);
+        i--;
+      } else {
+        clearInterval(timer);
+        if (callback) callback();
+      }
+    }, speed);
+  }
+
+  // Typing con efecto de aparición letra por letra
+  animateLetters(element, delay = 100) {
+    const text = element.textContent;
+    element.innerHTML = '';
+    
+    for (let i = 0; i < text.length; i++) {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      span.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+      span.style.animationDelay = `${i * delay}ms`;
+      element.appendChild(span);
+    }
+  }
+
+  // Typing con efecto glitch
+  glitchType(element, text) {
+    element.setAttribute('data-text', text);
+    element.className += ' typing-glitch';
+    this.typeText(element, text, 80);
+  }
+}
+
+// Instancia global
+let typingAnimator;
+
+// Función para inicializar typing animations
+function initTypingAnimations() {
+  typingAnimator = new TypingAnimator();
+  
+  // Aplicar typing animation al título principal después de un delay
+  setTimeout(() => {
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) {
+      const originalText = heroTitle.textContent;
+      heroTitle.textContent = '';
+      typingAnimator.typeText(heroTitle, originalText, 100, () => {
+        // Mostrar toast de bienvenida después del typing
+        if (window.toastManager) {
+          toastManager.success('¡Bienvenido al portfolio de Mariano!', '👋 Hola');
+        }
+      });
+    }
+  }, 1500);
+
+  // Typing para el subtítulo del chat
+  const chatSubtitle = document.querySelector('.chat-header .section-subtitle');
+  if (chatSubtitle) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const originalText = entry.target.textContent;
+          entry.target.textContent = '';
+          typingAnimator.typeText(entry.target, originalText, 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    observer.observe(chatSubtitle);
+  }
+
+  // Typing para elementos con clase especial
+  document.querySelectorAll('.typing-on-scroll').forEach(element => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const originalText = entry.target.textContent;
+          entry.target.textContent = '';
+          typingAnimator.typeText(entry.target, originalText, 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+    observer.observe(element);
+  });
+
+  console.log('🎪 Typing Animations initialized!');
+}
+
+// Función para agregar typing a cualquier elemento
+function addTypingEffect(selector, texts = null, options = {}) {
+  const elements = document.querySelectorAll(selector);
+  
+  elements.forEach(element => {
+    if (texts && Array.isArray(texts)) {
+      // Múltiples textos rotando
+      typingAnimator.typeMultipleTexts(element, texts, options.speed || 100, options.pause || 2000);
+    } else {
+      // Texto único
+      const text = texts || element.textContent;
+      element.textContent = '';
+      typingAnimator.typeText(element, text, options.speed || 100);
+    }
+  });
+}
+
+// Función para typing en tiempo real (útil para chat)
+function typeInRealTime(element, text, speed = 30) {
+  return new Promise((resolve) => {
+    element.textContent = '';
+    let i = 0;
+    
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(timer);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+// Inicializar en DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  initTypingAnimations();
+});
+// === 🎪 MICRO-INTERACCIONES PREMIUM - ADVANCED BUTTON STATES ===
+
+class AdvancedButtonManager {
+  constructor() {
+    this.clickCounts = new Map();
+    this.magneticStrength = 0.3;
+  }
+
+  // Convertir botón a estado loading
+  setLoading(button, text = null) {
+    if (!button) return;
+    
+    button.disabled = true;
+    button.classList.add('btn-loading');
+    
+    if (text) {
+      button.setAttribute('data-original-text', button.textContent);
+      button.textContent = text;
+    }
+  }
+
+  // Quitar estado loading
+  removeLoading(button) {
+    if (!button) return;
+    
+    button.disabled = false;
+    button.classList.remove('btn-loading');
+    
+    const originalText = button.getAttribute('data-original-text');
+    if (originalText) {
+      button.textContent = originalText;
+      button.removeAttribute('data-original-text');
+    }
+  }
+
+  // Convertir a estado success
+  setSuccess(button, duration = 2000) {
+    if (!button) return;
+    
+    const originalText = button.textContent;
+    button.classList.add('btn-success');
+    button.textContent = '';
+    
+    setTimeout(() => {
+      button.classList.remove('btn-success');
+      button.textContent = originalText;
+    }, duration);
+  }
+
+  // Convertir a estado error
+  setError(button, duration = 2000) {
+    if (!button) return;
+    
+    button.classList.add('btn-error');
+    
+    setTimeout(() => {
+      button.classList.remove('btn-error');
+    }, duration);
+  }
+
+  // Efecto magnético avanzado
+  initMagneticEffect(button) {
+    if (window.innerWidth <= 768) return; // Skip en móvil
+    
+    button.addEventListener('mousemove', (e) => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      const moveX = x * this.magneticStrength;
+      const moveY = y * this.magneticStrength;
+      
+      button.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      button.style.transform = 'translate(0, 0) scale(1)';
+    });
+  }
+
+  // Contador de clicks
+  initClickCounter(button) {
+    const id = button.id || `btn_${Math.random().toString(36).substr(2, 9)}`;
+    this.clickCounts.set(id, 0);
+    
+    button.addEventListener('click', () => {
+      const count = this.clickCounts.get(id) + 1;
+      this.clickCounts.set(id, count);
+      button.setAttribute('data-clicks', count);
+      
+      // Efecto de incremento
+      button.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        button.style.transform = '';
+      }, 150);
+    });
+  }
+
+  // Efecto de ondas al hacer click
+  createWaveEffect(button, e) {
+    const wave = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    
+    wave.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: wave 0.6s ease-out;
+      pointer-events: none;
+    `;
+    
+    button.appendChild(wave);
+    
+    setTimeout(() => {
+      wave.remove();
+    }, 600);
+  }
+
+  // Validación con feedback visual
+  validateAndFeedback(button, isValid, successMsg, errorMsg) {
+    if (isValid) {
+      this.setSuccess(button);
+      if (window.toastManager && successMsg) {
+        toastManager.success(successMsg);
+      }
+    } else {
+      this.setError(button);
+      if (window.toastManager && errorMsg) {
+        toastManager.error(errorMsg);
+      }
+    }
+  }
+
+  // Progreso en botón (para uploads, etc.)
+  setProgress(button, percentage) {
+    if (!button.querySelector('.progress-bar')) {
+      const progressBar = document.createElement('div');
+      progressBar.className = 'progress-bar';
+      progressBar.style.cssText = `
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: var(--accent);
+        width: 0%;
+        transition: width 0.3s ease;
+      `;
+      button.appendChild(progressBar);
+    }
+    
+    const progressBar = button.querySelector('.progress-bar');
+    progressBar.style.width = `${percentage}%`;
+    
+    if (percentage >= 100) {
+      setTimeout(() => {
+        progressBar.remove();
+        this.setSuccess(button);
+      }, 300);
+    }
+  }
+}
+
+// Instancia global
+let advancedButtonManager;
+
+// Inicializar advanced button states
+function initAdvancedButtonStates() {
+  advancedButtonManager = new AdvancedButtonManager();
+  
+  // Aplicar efectos a botones existentes
+  enhanceExistingButtons();
+  
+  // Agregar CSS de ondas
+  addWaveCSS();
+  
+  console.log('🎪 Advanced Button States initialized!');
+}
+
+function enhanceExistingButtons() {
+  // Efecto magnético para botones principales
+  document.querySelectorAll('.cta-button, .contact-link').forEach(button => {
+    advancedButtonManager.initMagneticEffect(button);
+    
+    button.addEventListener('click', (e) => {
+      advancedButtonManager.createWaveEffect(button, e);
+    });
+  });
+
+  // Loading state para botón de chat
+  const chatSend = document.getElementById('chat-send');
+  if (chatSend) {
+    const originalSendMessage = window.sendMessage;
+    if (originalSendMessage) {
+      window.sendMessage = async function() {
+        advancedButtonManager.setLoading(chatSend, 'Enviando...');
+        
+        try {
+          await originalSendMessage.apply(this, arguments);
+          advancedButtonManager.removeLoading(chatSend);
+          advancedButtonManager.setSuccess(chatSend, 1000);
+        } catch (error) {
+          advancedButtonManager.removeLoading(chatSend);
+          advancedButtonManager.setError(chatSend);
+        }
+      };
+    }
+  }
+
+  // Contador de clicks para elementos interactivos
+  document.querySelectorAll('.suggestion-bubble').forEach(bubble => {
+    advancedButtonManager.initClickCounter(bubble);
+  });
+
+  // Efecto especial para botón de cafecito
+  const cafecitoButton = document.querySelector('a[href*="cafecito.app"]');
+  if (cafecitoButton) {
+    cafecitoButton.classList.add('btn-pulse-glow');
+  }
+
+  // Gradiente animado para botones principales
+  document.querySelectorAll('.cta-button').forEach(button => {
+    button.classList.add('btn-gradient-animated');
+  });
+}
+
+function addWaveCSS() {
+  const waveCSS = `
+    @keyframes wave {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = waveCSS;
+  document.head.appendChild(style);
+}
+
+// Funciones de utilidad para usar en eventos
+function simulateButtonLoading(selector, duration = 2000) {
+  const button = document.querySelector(selector);
+  if (button) {
+    advancedButtonManager.setLoading(button, 'Procesando...');
+    setTimeout(() => {
+      advancedButtonManager.removeLoading(button);
+      advancedButtonManager.setSuccess(button);
+    }, duration);
+  }
+}
+
+function simulateButtonProgress(selector, duration = 3000) {
+  const button = document.querySelector(selector);
+  if (button) {
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      advancedButtonManager.setProgress(button, progress);
+      if (progress >= 100) {
+        clearInterval(interval);
+      }
+    }, duration / 10);
+  }
+}
+
+// Inicializar en DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  initAdvancedButtonStates();
+});
+<!-- LazySizes Script para lazy loading de videos -->
+
+// Funcionalidad "Ver Más Videos"
+document.addEventListener('DOMContentLoaded', function() {
+  const loadMoreBtn = document.getElementById('load-more-videos');
+  const showLessBtn = document.getElementById('show-less-videos');
+  const additionalVideos = document.getElementById('additional-videos');
+  
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      // Mostrar videos adicionales
+      additionalVideos.classList.remove('hidden');
+      additionalVideos.classList.add('loading');
+      
+      // Scroll suave hacia los nuevos videos
+      setTimeout(() => {
+        additionalVideos.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+        additionalVideos.classList.remove('loading');
+        additionalVideos.classList.add('loaded');
+      }, 300);
+      
+      // Cambiar botones
+      loadMoreBtn.classList.add('hidden');
+      showLessBtn.classList.remove('hidden');
+      
+      // Toast notification
+      if (window.toastManager) {
+        toastManager.success('¡Videos adicionales cargados!', '🎬 Portfolio');
+      }
+    });
+  }
+  
+  if (showLessBtn) {
+    showLessBtn.addEventListener('click', function() {
+      // Ocultar videos adicionales
+      additionalVideos.classList.add('hidden');
+      additionalVideos.classList.remove('loaded');
+      
+      // Scroll hacia arriba
+      document.getElementById('featured-videos').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+      
+      // Cambiar botones
+      showLessBtn.classList.add('hidden');
+      loadMoreBtn.classList.remove('hidden');
+      
+      // Toast notification
+      if (window.toastManager) {
+        toastManager.info('Videos minimizados', '📱 Vista');
+      }
+    });
+  }
+});
+</script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.0/lazysizes.min.js" async></script>
+</body>
+</html>
